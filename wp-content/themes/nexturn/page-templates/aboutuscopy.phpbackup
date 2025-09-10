@@ -1,0 +1,181 @@
+<?php /* Template Name: About Us */
+get_header();
+?>
+<section class="innerHero-section" style="background-image: url(<?php echo get_template_directory_uri().'/assets/images/about_banner.svg'?>);">
+        <div class="container">
+          <div class="innerBanner-text">
+              <h1 class="display-4 fw-bold mb-4">Engineering <span class="impact-text">Impact</span> for<br>
+              <span class="global-text">Global Leaders</span> <span class="innovators-text">and Innovators</span></h1>
+              <p class="lead mb-4">We are here to propel organizations into the future, crafting transformative technologies that drive progress, amplify impact, and inspire greatness</p>
+              <?php get_template_part('template','partner-link') ?>
+          </div>
+
+        </div>
+    </section>
+	
+
+
+    <!--  middle comtent -->
+    
+	<section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p class="lead">NexTurn harnesses the power of cloud technologies and AI responsibly, delivering industry-specific, sustainable, and impactful solutions that drive growth, efficiency, and a better tomorrow.</p>
+          <p class="lead mt-4">Unlike traditional system integrators, we embrace a technology-first approach, blending deep expertise in AI, cloud engineering, and analytics to deliver transformative results faster. Our AI-driven delivery ecosystem, paired with agile advisory models, ensures cost-effective, scalable solutions that consistently outperform industry benchmarks.</p>
+          <p class="lead mt-4">Our commitment to a "people-first culture" shines through in personalized client engagements and end-to-end support. From enhancing customer experiences to modernizing legacy infrastructures, NexTurn combines innovation, agility, and expertise to unlock measurable value.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+	
+	
+	<section class="team">
+        <div class="container">
+			 <h2 class="text-left display-4">Team</h2>
+            
+	<div class="team-section">
+		<div class="row">
+        <div class="col-12">
+          <div class="accordion" id="teamAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFounders">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFounders" aria-expanded="true" aria-controls="collapseFounders">
+                  Founders
+                </button>
+              </h2>
+              <div id="collapseFounders" class="accordion-collapse collapse show" aria-labelledby="headingFounders" data-bs-parent="#teamAccordion">
+                <div class="accordion-body">
+
+                  <div class="row g-4">
+                    <div class="col-md-3">
+                      <div class="founders-card">
+						  <img src="<?php echo get_template_directory_uri().'/assets/images/team/deva.svg'?>" alt="Bhaskar" class="founders-img">
+                       
+                        <h4 class="mt-3">Bhaskar</h4>
+                       
+						  <div class="d-flex justify-content-between"><p>Founder</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="founders-card">
+                        <img src="<?php echo get_template_directory_uri().'/assets/images/team/naren.svg'?>" alt="Naren" class="founders-img">
+                        <h4 class="mt-3">Naren</h4>
+						  <div class="d-flex justify-content-between">
+                        <p>Founder</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a>
+						  </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="founders-card">
+                       <img src="<?php echo get_template_directory_uri().'/assets/images/team/deva.svg'?>" alt="Deva" class="founders-img">
+                        <h4 class="mt-3">Deva</h4>
+						  <div class="d-flex justify-content-between">
+                        <p>Founder</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a>
+						  </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFoundPartners">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFoundPartners" aria-expanded="true" aria-controls="collapseFoundPartners">
+                  Founding Partners
+                </button>
+              </h2>
+              <div id="collapseFoundPartners" class="accordion-collapse collapse in" aria-labelledby="headingFoundPartners" data-bs-parent="#teamAccordion">
+                <div class="accordion-body">
+                	
+                  <div class="row g-4">
+                    <div class="col-md-3">
+                      <div class="founders-card">
+						  <img src="<?php echo get_template_directory_uri().'/assets/images/team/naren.svg'?>" alt="Bhaskar" class="founders-img">
+                       
+                        <h4 class="mt-3">Saravanan</h4>
+                       
+						  <div class="d-flex justify-content-between"><p>Chief Business Officer</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a></div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="founders-card">
+                        <img src="<?php echo get_template_directory_uri().'/assets/images/team/deva.svg'?>" alt="Naren" class="founders-img">
+                        <h4 class="mt-3">Baba</h4>
+						  <div class="d-flex justify-content-between">
+                        <p>Chief Transformation Officer</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a>
+						  </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="founders-card">
+                       <img src="<?php echo get_template_directory_uri().'/assets/images/team/deva.svg'?>" alt="Deva" class="founders-img">
+                        <h4 class="mt-3">Siva</h4>
+						  <div class="d-flex justify-content-between">
+                        <p>Chief Technology Officer</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a>
+						  </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="founders-card">
+                       <img src="<?php echo get_template_directory_uri().'/assets/images/team/naren.svg'?>" alt="Deva" class="founders-img">
+                        <h4 class="mt-3">Gunjan</h4>
+              <div class="d-flex justify-content-between">
+                        <p>Chief Delivery Officer</p>
+                        <a href="#" class="social-link">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"></path>
+                          </svg>
+                        </a>
+              </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     
+		</div>
+	</div>
+			
+            
+		</div>
+	</section>
+  <?php get_template_part('template','partner-contact') ?>
+<?php get_footer(); ?>
+
