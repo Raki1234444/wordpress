@@ -790,12 +790,12 @@ function render_resource_html($resource, $counter)
                         <div class="col-lg-11 offset-lg-1 px-lg-4 px-0">
                             <h2 class="animate-on-scroll home-card-heading mb-4"><?php echo esc_html(get_the_title($resource)); ?></h2>
                             <?php if ($resource_card_text): ?>
-                                <p class="description animate-on-scroll innersec-white"><?php echo esc_html($resource_card_text); ?></p>
+                                <p class="description animate-on-scroll innersec-white"><?php echo wp_kses_post($resource_card_text); ?></p>
                             <?php endif; ?>
 
                             <!-- Know More Button -->
                             <div class="animate-on-scroll">
-                                <a href="<?php echo esc_url(get_permalink($resource)); ?>" class="svg-container cta-btn">
+                                <a href="<?php echo esc_url(get_permalink($resource)); ?>" class="svg-container cta-btn" target="_blank">
                                     <span class="pe-3">Know More</span>
                                     <svg class="home-bn-arrow" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                         <g data-name="Layer 2">
@@ -821,12 +821,12 @@ function render_resource_html($resource, $counter)
                         <div class="col-lg-11 px-lg-4 px-0">
                             <h2 class="animate-on-scroll home-card-heading mb-4"><?php echo esc_html(get_the_title($resource)); ?></h2>
                             <?php if ($resource_card_text): ?>
-                                <p class="animate-on-scroll innersec-white"><?php echo esc_html($resource_card_text); ?></p>
+                                <p class="animate-on-scroll innersec-white"><?php echo wp_kses_post($resource_card_text); ?></p>
                             <?php endif; ?>
 
                             <!-- Know More Button -->
                             <div class="animate-on-scroll">
-                                <a href="<?php echo esc_url(get_permalink($resource)); ?>" class="svg-container cta-btn">
+                                <a href="<?php echo esc_url(get_permalink($resource)); ?>" class="svg-container cta-btn" target="_blank">
                                     <span class="pe-3">Know More</span>
                                     <svg class="home-bn-arrow" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                         <g data-name="Layer 2">
@@ -921,8 +921,8 @@ add_shortcode('resources-section', function ($atts) {
                             ]]
                         ]);
                         ?>
-                        <div class="resource-group-tile" style="position: relative; display: inline-block; background: none; border: none; box-shadow: none; padding: 0; margin: 0;">
-                            <span class="resource-group-name" style="font-weight: normal; color: inherit; padding: 0; border: none; background: none; cursor: pointer;">
+                        <div class="resource-group-tile" style="position: relative; display: inline-block; ">
+                            <span class="resource-group-name" style="font-weight: normal; color: inherit; cursor: pointer;">
                                 <?php echo esc_html($term->name); ?>
                             </span>
                             <div class="resource-group-popover custom-popover">
@@ -930,7 +930,7 @@ add_shortcode('resources-section', function ($atts) {
                                     <ul class="resources-list">
                                         <?php foreach ($term_resources as $res): ?>
                                             <li>
-                                                <a href="<?php echo esc_url(get_permalink($res)); ?>" class="resource-link">
+                                                <a href="<?php echo esc_url(get_permalink($res)); ?>" class="resource-link" target="_blank">
                                                     <?php echo esc_html(get_the_title($res)); ?>
                                                 </a>
                                             </li>
@@ -965,26 +965,90 @@ add_shortcode('resources-section', function ($atts) {
 
     <script>
         jQuery(document).ready(function($) {
+            var hideTimeout;
+            var $resourcesContainer = $('#resources-container');
+            
+            // Function to calculate and apply dynamic margin
+            function calculateAndMoveCards($popover) {
+                // First, show popover to calculate its height
+                $popover.show();
+                
+                // Get the actual height of the popover
+                var popoverHeight = $popover.outerHeight();
+                
+                // Calculate dynamic margin: popover height + some padding
+                var dynamicMargin = popoverHeight + 20;
+                
+                // Move cards down based on actual popover height
+                $resourcesContainer.css('margin-top', dynamicMargin + 'px');
+                
+                // Hide popover and then fade it in smoothly
+                $popover.hide().stop(true, true).fadeIn(120);
+            }
+            
+            // Function to hide all popovers and reset cards
+            function hideAllPopovers() {
+                $('.resource-group-popover').stop(true, true).fadeOut(120);
+                $resourcesContainer.css('margin-top', '0');
+            }
+            
             $('.resource-group-tile').each(function() {
                 var $tile = $(this);
                 var $popover = $tile.find('.resource-group-popover');
-                var hideTimeout;
+                var isClicked = false;
 
-                $tile.on('mouseenter', function() {
+                // Function to show popover and move cards
+                function showPopoverAndMoveCards() {
                     clearTimeout(hideTimeout);
-                    $popover.stop(true, true).fadeIn(120);
+                    
+                    // Hide all other popovers first
+                    $('.resource-group-popover').not($popover).stop(true, true).fadeOut(120);
+                    
+                    // Calculate and move cards for this popover
+                    calculateAndMoveCards($popover);
+                }
+
+                // Function to hide popover and reset cards
+                function hidePopoverAndResetCards() {
+                    if (!isClicked) { // Only auto-hide if not clicked
+                        hideTimeout = setTimeout(function() {
+                            hideAllPopovers();
+                        }, 120);
+                    }
+                }
+
+                // Hover events
+                $tile.on('mouseenter', function() {
+                    showPopoverAndMoveCards();
                 }).on('mouseleave', function() {
-                    hideTimeout = setTimeout(function() {
-                        $popover.stop(true, true).fadeOut(120);
-                    }, 120);
+                    hidePopoverAndResetCards();
+                });
+
+                // Click events
+                $tile.on('click', function(e) {
+                    // Don't prevent default if clicking on a resource link
+                    if ($(e.target).hasClass('resource-link')) {
+                        return; // Let the link work normally
+                    }
+                    
+                    e.preventDefault();
+                    isClicked = !isClicked; // Toggle clicked state
+                    
+                    if (isClicked) {
+                        // Show popover and move cards
+                        showPopoverAndMoveCards();
+                        $tile.addClass('active');
+                    } else {
+                        // Hide popover and reset cards
+                        hideAllPopovers();
+                        $tile.removeClass('active');
+                    }
                 });
 
                 $popover.on('mouseenter', function() {
                     clearTimeout(hideTimeout);
                 }).on('mouseleave', function() {
-                    hideTimeout = setTimeout(function() {
-                        $popover.stop(true, true).fadeOut(120);
-                    }, 120);
+                    hidePopoverAndResetCards();
                 });
             });
         });

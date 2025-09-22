@@ -450,30 +450,7 @@ jQuery(document).ready(function($) {
   });
 });
 
-// Intersection Observer to detect when elements are in viewport
-const observerOptions = {
-  root: null, // use viewport as root
-  rootMargin: '0px',
-  threshold: 0.1 // trigger animation when 10% of element is visible
-};
 
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target); // stop observing once animation is triggered
-    }
-  });
-}, observerOptions);
-
-// Observe all elements with animation classes
-document.addEventListener('DOMContentLoaded', () => {
-  const animatedElements = document.querySelectorAll('.animate-on-scroll, .fade-in, .slide-in-left, .slide-in-right, .scale-in');
-
-  animatedElements.forEach(element => {
-    observer.observe(element);
-  });
-});
 
 const multipleItemCarousel = document.querySelector("#testimonialCarousel");
 
@@ -527,3 +504,59 @@ if(typeof multipleItemCarousel != 'undefined' && multipleItemCarousel != null ){
     //  });
 
 }
+/* Scroll animation initializer (IntersectionObserver + fallback) */
+(function(){
+  // Create observer only if supported
+  let observer;
+  if ('IntersectionObserver' in window) {
+    observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    });
+  }
+
+  function animateOnScroll() {
+    const elements = document.querySelectorAll('.scroll-animate');
+    elements.forEach((el, index) => {
+      // set stagger delay if not provided
+      if (!el.style.getPropertyValue('--delay')) {
+        el.style.setProperty('--delay', `${index * 0.08}s`);
+      }
+
+      // Use IntersectionObserver if available
+      if (observer) {
+        observer.observe(el);
+        return;
+      }
+
+      // Fallback: simple viewport check and stagger
+      const rect = el.getBoundingClientRect();
+      const elementVisible = 150;
+      if (rect.top < window.innerHeight - elementVisible) {
+        setTimeout(() => el.classList.add('animate'), index * 100);
+      }
+    });
+  }
+
+  // Run on DOM ready and attach scroll fallback if observer is not available
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      animateOnScroll();
+      if (!observer) window.addEventListener('scroll', animateOnScroll);
+    });
+  } else {
+    animateOnScroll();
+    if (!observer) window.addEventListener('scroll', animateOnScroll);
+  }
+})();
+
+
+

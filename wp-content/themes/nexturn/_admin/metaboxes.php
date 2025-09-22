@@ -217,17 +217,25 @@ function nexturn_register_meta_boxes($meta_boxes)
             array(
                 'name' => __('Summary Description', 'your-prefix'),
                 'id' => "{$resource_prefix}summary",
-                'type' => 'textarea',
-                'cols' => 55,
-                'rows' => 5,
+                'type' => 'wysiwyg',
+                'options' => array(
+                    'textarea_rows' => 5,
+                    'media_buttons' => false,
+                    'teeny' => false,
+                    'wpautop' => false
+                ),
                 'desc' => __('Short summary used on Resource Center cards.', 'your-prefix'),
             ),
             array(
                 'name' => __('Description', 'your-prefix'),
                 'id' => "{$resource_prefix}text",
-                'type' => 'textarea',
-                'cols' => 55,
-                'rows' => 10,
+                'type' => 'wysiwyg',
+                'options' => array(
+                    'textarea_rows' => 10,
+                    'media_buttons' => false,
+                    'teeny' => false,
+                    'wpautop' => false
+                ),
             ),
             array(
                 'name' => __('Image', 'your-prefix'),

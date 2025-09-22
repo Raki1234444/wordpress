@@ -68,7 +68,7 @@
 										<?php
 										$full_desc = rwmb_meta('resource_text', [], get_the_ID());
 										if ($full_desc !== '') {
-											echo nl2br(esc_html($full_desc));
+											echo nl2br(wp_kses_post($full_desc));
 										} else {
 											the_content();
 										}

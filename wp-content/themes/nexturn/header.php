@@ -14,6 +14,7 @@
         gtag('js', new Date());
         gtag('config', 'G-TSS74GRH62');
     </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -58,7 +59,7 @@
         class="navbar navbar-expand-lg navbar-dark fixed-top <?php if ( is_admin_bar_showing() ) { echo ' admin-step'; } ?>">
         <div class="container">
             <a class="navbar-brand" href="<?php echo site_url(); ?>">
-            <img src="<?php echo get_template_directory_uri() . '/assets/images/site_logo.png'; ?> " alt="Site Logo"/>
+             <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/site_logo-scaled.png' ); ?>" alt="Site Logo" />
 				
 				<!-- <svg width="100%" height="29" viewBox="0 0 186 29" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M55.7866 0.962158H52.7642L61.2586 14.0078C61.2589 14.0073 62.1015 13.0206 62.935 12.0732L55.7866 0.962158Z" fill="white"/>
