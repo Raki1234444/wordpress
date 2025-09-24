@@ -171,7 +171,7 @@ $post_slug = $post->post_name;
     </li> -->
 	<li class="nav-item">
     <a class="nav-link"
-       href="https://apps.nexturn.com/" target="_blank" rel="noopener noreferrer">Solutions
+      href="<?php echo site_url('solutions') ?>">Solutions
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="mobile-arrow"
              xmlns="http://www.w3.org/2000/svg">
             <path d="M12.079 7.5L6.286 13.292L7 14L14 7L7 0L6.286 0.708L12.08 6.5H0V7.5H12.079Z" fill="white" />
