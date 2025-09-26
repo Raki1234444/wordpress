@@ -904,7 +904,7 @@ add_shortcode('resources-section', function ($atts) {
     <section class="resources-section home">
         <div class="container-fluid">
             <?php if (!is_wp_error($terms) && !empty($terms)): ?>
-                <div class="d-flex flex-row flex-wrap gap-3 justify-content-start mb-4" style="gap: 1rem;">
+                <div class="d-flex flex-row flex-wrap gap-3 justify-content-center mb-4" style="gap: 1rem;">
                     <?php foreach ($terms as $term): ?>
                         <?php
                         // Resources for this term (titles only)
@@ -943,6 +943,51 @@ add_shortcode('resources-section', function ($atts) {
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <!-- Mobile: carousel with 2 groups per slide -->
+                <div class="owl-carousel resource-carousel d-block d-md-none">
+                    <?php
+                    $chunked_terms = array_chunk($terms, 1); // 2 groups per slide
+                    foreach ($chunked_terms as $term_pair): ?>
+                        <div class="carousel-slide d-flex">
+                            <?php foreach ($term_pair as $term): ?>
+                                <?php
+                                $term_resources = get_posts([
+                                    'post_type'      => 'resource',
+                                    'posts_per_page' => -1,
+                                    'orderby'        => 'date',
+                                    'order'          => 'DESC',
+                                    'post_status'    => 'publish',
+                                    'tax_query'      => [[
+                                        'taxonomy' => 'resource_group',
+                                        'field'    => 'term_id',
+                                        'terms'    => $term->term_id,
+                                    ]]
+                                ]);
+                                ?>
+                                <div class="resource-group-tile flex-fill" style="position: relative;">
+                                    <span class="resource-group-name">
+                                        <?php echo esc_html($term->name); ?>
+                                    </span>
+                                    <div class="resource-group-popover custom-popover">
+                                        <?php if (!empty($term_resources)): ?>
+                                            <ul class="resources-list">
+                                                <?php foreach ($term_resources as $res): ?>
+                                                    <li>
+                                                        <a href="<?php echo esc_url(get_permalink($res)); ?>" class="resource-link" target="_blank">
+                                                            <?php echo esc_html(get_the_title($res)); ?>
+                                                        </a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        <?php else: ?>
+                                            <div class="resources-empty">No resources in this group.</div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
 
             <?php if (!empty($resources_to_render)): ?>
@@ -963,96 +1008,111 @@ add_shortcode('resources-section', function ($atts) {
         </div>
     </section>
 
-    <script>
-        jQuery(document).ready(function($) {
-            var hideTimeout;
-            var $resourcesContainer = $('#resources-container');
-            
-            // Function to calculate and apply dynamic margin
-            function calculateAndMoveCards($popover) {
-                // First, show popover to calculate its height
-                $popover.show();
-                
-                // Get the actual height of the popover
-                var popoverHeight = $popover.outerHeight();
-                
-                // Calculate dynamic margin: popover height + some padding
-                var dynamicMargin = popoverHeight + 20;
-                
-                // Move cards down based on actual popover height
-                $resourcesContainer.css('margin-top', dynamicMargin + 'px');
-                
-                // Hide popover and then fade it in smoothly
-                $popover.hide().stop(true, true).fadeIn(120);
+<script>
+jQuery(document).ready(function($) {
+    var hideTimeout;
+    var $resourcesContainer = $('#resources-container');
+
+    // Function to calculate and apply dynamic margin
+    function calculateAndMoveCards($popover) {
+        if ($(window).width() > 768) { // desktop only
+            // First, show popover to calculate its height
+            $popover.show();
+
+            // Get the actual height of the popover
+            var popoverHeight = $popover.outerHeight();
+
+            // Calculate dynamic margin: popover height + some padding
+            var dynamicMargin = popoverHeight + 20;
+
+            // Move cards down based on actual popover height
+            $resourcesContainer.css('margin-top', dynamicMargin + 'px');
+
+            // Hide popover and then fade it in smoothly
+            $popover.hide().stop(true, true).fadeIn(120);
+        } else {
+            // Mobile: just show popover without moving cards
+            $popover.stop(true, true).fadeIn(120);
+        }
+    }
+
+    // Function to hide all popovers and reset cards
+    function hideAllPopovers() {
+        $('.resource-group-popover').stop(true, true).fadeOut(120);
+        if ($(window).width() > 768) {
+            $resourcesContainer.css('margin-top', '0'); // desktop only
+        }
+        $('.resource-group-tile').removeClass('active').data('isClicked', false);
+    }
+
+    $('.resource-group-tile').each(function() {
+        var $tile = $(this);
+        var $popover = $tile.find('.resource-group-popover');
+
+        // Initialize click state
+        $tile.data('isClicked', false);
+
+        // Function to show popover and move cards
+        function showPopoverAndMoveCards() {
+            clearTimeout(hideTimeout);
+
+            // Hide all other popovers first
+            $('.resource-group-popover').not($popover).stop(true, true).fadeOut(120);
+
+            // Calculate and move cards for this popover
+            calculateAndMoveCards($popover);
+        }
+
+        // Function to hide popover and reset cards
+        function hidePopoverAndResetCards() {
+            if (!$tile.data('isClicked')) { // Only auto-hide if not clicked
+                hideTimeout = setTimeout(function() {
+                    hideAllPopovers();
+                }, 120);
             }
-            
-            // Function to hide all popovers and reset cards
-            function hideAllPopovers() {
-                $('.resource-group-popover').stop(true, true).fadeOut(120);
-                $resourcesContainer.css('margin-top', '0');
-            }
-            
-            $('.resource-group-tile').each(function() {
-                var $tile = $(this);
-                var $popover = $tile.find('.resource-group-popover');
-                var isClicked = false;
+        }
 
-                // Function to show popover and move cards
-                function showPopoverAndMoveCards() {
-                    clearTimeout(hideTimeout);
-                    
-                    // Hide all other popovers first
-                    $('.resource-group-popover').not($popover).stop(true, true).fadeOut(120);
-                    
-                    // Calculate and move cards for this popover
-                    calculateAndMoveCards($popover);
-                }
-
-                // Function to hide popover and reset cards
-                function hidePopoverAndResetCards() {
-                    if (!isClicked) { // Only auto-hide if not clicked
-                        hideTimeout = setTimeout(function() {
-                            hideAllPopovers();
-                        }, 120);
-                    }
-                }
-
-                // Hover events
-                $tile.on('mouseenter', function() {
-                    showPopoverAndMoveCards();
-                }).on('mouseleave', function() {
-                    hidePopoverAndResetCards();
-                });
-
-                // Click events
-                $tile.on('click', function(e) {
-                    // Don't prevent default if clicking on a resource link
-                    if ($(e.target).hasClass('resource-link')) {
-                        return; // Let the link work normally
-                    }
-                    
-                    e.preventDefault();
-                    isClicked = !isClicked; // Toggle clicked state
-                    
-                    if (isClicked) {
-                        // Show popover and move cards
-                        showPopoverAndMoveCards();
-                        $tile.addClass('active');
-                    } else {
-                        // Hide popover and reset cards
-                        hideAllPopovers();
-                        $tile.removeClass('active');
-                    }
-                });
-
-                $popover.on('mouseenter', function() {
-                    clearTimeout(hideTimeout);
-                }).on('mouseleave', function() {
-                    hidePopoverAndResetCards();
-                });
+        // Hover events (only on desktop)
+        if ($(window).width() > 768) {
+            $tile.on('mouseenter', function() {
+                showPopoverAndMoveCards();
+            }).on('mouseleave', function() {
+                hidePopoverAndResetCards();
             });
+        }
+
+        // Click events
+        $tile.on('click', function(e) {
+            if ($(e.target).hasClass('resource-link')) {
+                return; // let links work normally
+            }
+
+            e.preventDefault();
+
+            if ($tile.hasClass('active')) {
+                // If this tile is already active, close it
+                hideAllPopovers();
+            } else {
+                // Close all other tiles and reset their state
+                hideAllPopovers();
+
+                // Activate this tile immediately
+                $tile.data('isClicked', true).addClass('active');
+                calculateAndMoveCards($popover);
+            }
         });
-    </script>
+
+        // Popover hover handling
+        $popover.on('mouseenter', function() {
+            clearTimeout(hideTimeout);
+        }).on('mouseleave', function() {
+            hidePopoverAndResetCards();
+        });
+    });
+});
+
+</script>
+
 <?php
     return ob_get_clean();
 });

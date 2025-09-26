@@ -605,6 +605,41 @@ if (typeof multipleItemCarousel != 'undefined' && multipleItemCarousel != null) 
         initSolutionsAnimations();
     }
 })();
+jQuery(document).ready(function ($) {
+
+    // ---------------------------
+    // 1️⃣ Mobile Carousel Init
+    // ---------------------------
+    function initResourceCarousel() {
+        if ($(window).width() < 768) {
+            if (!$('.resource-carousel').hasClass('owl-loaded')) {
+                $('.resource-carousel').owlCarousel({
+                    loop: false,
+                    margin: 10,
+                    nav: true,
+                    dots: false,
+                    items: 1,        // shows one slide (2 buttons inside)
+                    autoWidth: true, // adapt width to button content
+                    slideBy: 1,
+                    smartSpeed: 600,
+                    autoplay: false,
+                    touchDrag: true,
+                    mouseDrag: true
+                });
+            }
+        } else {
+            if ($('.resource-carousel').hasClass('owl-loaded')) {
+                $('.resource-carousel').trigger('destroy.owl.carousel');
+                $('.resource-carousel').removeClass('owl-loaded');
+                $('.resource-carousel').find('.owl-stage-outer').children().unwrap();
+            }
+        }
+    }
+
+    initResourceCarousel();
+    $(window).on('resize', initResourceCarousel);
+
+});
 
 
 

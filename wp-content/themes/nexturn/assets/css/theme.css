@@ -951,6 +951,7 @@ textarea.form-control {
 .innersec-white {
   font-size: 1.25rem;
   font-weight: 500;
+  color: #fff;
 }
 
 .innersec-white-medium {
@@ -2483,7 +2484,11 @@ input[type="number"] {
   bottom: 4px;
 }
 
-/* Resources shortcode styles */
+/* ==========================
+   Resource Group Buttons & Popovers
+   ========================== */
+
+/* Popover Styles */
 .resource-group-popover {
   display: none;
   position: absolute;
@@ -2493,13 +2498,18 @@ input[type="number"] {
   min-width: 260px;
   max-width: 360px;
   max-height: 300px;
-  overflow: auto;
+  overflow-y: auto;
+  background: #0a1e3c;
+  border-radius: 4px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 0;
 }
 
+/* Resource list inside popover */
 .resources-list {
   list-style: none;
   margin: 0;
-  padding: 0.5rem;
+  padding: 0;
 }
 
 .resource-link {
@@ -2507,17 +2517,14 @@ input[type="number"] {
   padding: 8px 15px;
   color: #fff;
   text-decoration: none;
-  background: #000;
   border: 0;
-  border-radius: 0;
   margin: 0;
   transition: background 0.2s, color 0.2s;
 }
 
-
 .resource-link:hover,
 .resource-link:focus {
-  background: #0a1e3c8f;
+  background: rgba(10, 30, 60, 0.55);
   color: #2251ff;
   font-weight: bold;
   text-decoration: none;
@@ -2525,28 +2532,25 @@ input[type="number"] {
 
 .resources-empty {
   padding: 0.75rem 1rem;
-  color: #666;
+  color: #ccc;
+  font-size: 14px;
+  text-align: center;
 }
 
 /* ==========================
    Resource Group Buttons
    ========================== */
-
 .resource-group-tile {
   position: relative;
   display: inline-block;
   margin: 0 1rem 1rem 0;
-  /* spacing between buttons */
 }
 
 .resource-group-name {
   display: inline-block;
   padding: 12px 22px;
-  /* more padding for bigger button */
   margin: 4px;
-  /* small outer margin */
   background: #0a1e3c;
-  /* dark bg by default */
   color: #fff;
   font-weight: 500;
   font-size: 16px;
@@ -2554,21 +2558,55 @@ input[type="number"] {
   border: 1px solid #2251ff;
   text-decoration: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  /* shadow by default */
   transition: all 0.2s ease-in-out;
 }
 
-/* Hover + Active state */
 .resource-group-name:hover,
 .resource-group-name:focus,
 .resource-group-name:active {
   background: #2251ff;
-  /* bright blue on hover/click */
   color: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) inset;
-  /* pressed look */
   transform: translateY(1px);
-  /* slight press effect */
+}
+
+/* ==========================
+   Mobile Carousel Adjustments
+   ========================== */
+.resource-carousel .carousel-slide {
+  display: flex;
+  gap: 0.5rem;
+}
+.resource-carousel .resource-group-name {
+  width: 100%; /* take full tile width */
+  text-align: center;
+}
+.resource-carousel .resource-group-tile {
+  flex: 0 0 48%; /* roughly half the slide width for 2 items */
+  min-width: 0;  /* prevent forcing a bigger width */
+  white-space: nowrap; /* prevent text from breaking */
+  overflow: hidden;
+  text-overflow: ellipsis; /* show ... if text too long */
+  padding-right: 0.25rem;
+}
+
+/* Hide desktop button container on mobile */
+@media (max-width: 767px) {
+  .d-flex.flex-row.flex-wrap {
+    display: none !important;
+  }
+  .resource-group-popover {
+    position: relative;
+    min-width: 0;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    margin-top: 0.5rem;
+  }
+   
 }
 
 /* ==========================
