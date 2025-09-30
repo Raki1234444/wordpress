@@ -2608,6 +2608,41 @@ input[type="number"] {
   }
    
 }
+/* single resource page */
+.resource-hero {
+	margin-top: 100px; /* 20px margin around section */
+}
+
+.resource-hero img {
+	object-fit: cover;
+	height: 100vh; /* full screen height on desktop */
+}
+
+.resource-hero .cta-btn {
+	display: inline-flex;
+	align-items: center;
+	color: rgb(255, 255, 255);
+	font-size: 1.2rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.resource-hero .cta-btn svg {
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
+
+@media (max-width: 991px) {
+	.resource-hero img {
+		height: auto; /* stack naturally */
+	}
+	.resource-hero .col-lg-6 {
+		width: 100%;
+	}
+}
+
+
 
 /* ==========================
    Solutions Adjustments
@@ -2961,7 +2996,6 @@ input[type="number"] {
   padding: 12px 30px;
   border-radius: 25px;
   font-weight: 600;
-  width: 100%;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -3000,4 +3034,41 @@ input[type="number"] {
 
 .stagger-animate {
   animation-delay: var(--delay, 0s);
+}
+
+.page-wrapper{
+  margin-top: 5rem;
+  font-family: 'Funnel Sans';
+}
+/* Style the Features list */
+.container .mt-4 ul li {
+  font-size: 1.1rem;   /* Increase text size (adjust to 1.2rem if you want bigger) */
+  line-height: 1.6;    /* Better readability */
+  margin-bottom: 15px; /* Space between each point */
+}
+.container .mt-4 p{
+ font-size: 1.1rem; 
+}
+.col-md-7 .card-text{
+  font-size: 1.2rem;
+}
+.badge {
+  background-color:rgb(212, 235, 242) ;
+}
+.subscribe {
+  background: var(--gradient-blue);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.subscribe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34, 81, 255, 0.4);
+  color: white;
 }
