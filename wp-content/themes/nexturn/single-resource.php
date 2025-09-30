@@ -35,24 +35,33 @@
 						<?php endif; ?>
 
 						<!-- Text Left on Desktop, Second on Mobile -->
-						<div class="col-lg-6 d-flex align-items-center p-5 bg-dark order-2 order-lg-1">
-							<div id="resource-description" class="fs-5 lh-lg text-white">
-								<?php
-								$full_desc = rwmb_meta('resource_text', [], get_the_ID());
+						<!-- Text Left on Desktop, Second on Mobile -->
+						<div class="col-lg-6 d-flex align-items-center p-4 order-2 order-lg-1">
+							<div class="text-white">
+								<!-- Resource Title -->
+								<h1 class="mb-4 fs-2 fw-bold" id="resource-title">
+									<?php the_title(); ?>
+								</h1>
 
-								if ($full_desc !== '') {
-									// Show trimmed text
-									echo wp_kses_post(wp_trim_words($full_desc, 40, '...'));
-									// Store full text in hidden div
-									echo '<div id="resource-description-full" style="display:none;">' . wp_kses_post($full_desc) . '</div>';
-								} else {
-									echo wp_kses_post(wp_trim_words(get_the_content(), 40, '...'));
-									echo '<div id="resource-description-full" style="display:none;">' . wp_kses_post(get_the_content()) . '</div>';
-								}
-								?>
+								<!-- Resource Description -->
+								<div id="resource-description" class="fs-5 lh-lg">
+									<?php
+									$full_desc = rwmb_meta('resource_text', [], get_the_ID());
+
+									if ($full_desc !== '') {
+										// Show trimmed text
+										echo wp_kses_post(wp_trim_words($full_desc, 100, '...'));
+										// Store full text in hidden div
+										echo '<div id="resource-description-full" style="display:none;">' . wp_kses_post($full_desc) . '</div>';
+									} else {
+										echo wp_kses_post(wp_trim_words(get_the_content(), 100, '...'));
+										echo '<div id="resource-description-full" style="display:none;">' . wp_kses_post(get_the_content()) . '</div>';
+									}
+									?>
+								</div>
 							</div>
-
 						</div>
+
 					</section>
 
 					<!-- Modal -->

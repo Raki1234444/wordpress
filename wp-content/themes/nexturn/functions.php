@@ -124,7 +124,17 @@ if (descFull) {
 			doc.setFontSize(12);
 			var y = margin + 24;
 			var lines = doc.splitTextToSize(description, maxWidth);
-			doc.text(lines, margin, y, { maxWidth: maxWidth, lineHeightFactor: 1.4 });
+			var pageHeight = doc.internal.pageSize.height;
+            var lineHeight = 18;
+
+            lines.forEach(function (line) {
+	        if (y + lineHeight > pageHeight - margin) {
+		       doc.addPage();
+		       y = margin; // reset for new page
+	      }
+	      doc.text(line, margin, y, { maxWidth: maxWidth });
+	     y += lineHeight;
+      });
 
 			var safeName = (title || 'resource').replace(/[^\w\-\s\.]/g, '_') + '.pdf';
 			var blob = doc.output('blob');
@@ -799,7 +809,7 @@ function render_resource_html($resource, $counter)
             <div class="col-lg-6 p-0">
                 <div class="service-card">
                     <div class="row">
-                        <div class="col-lg-11 offset-lg-1 px-lg-4 px-0">
+                        <div class="col-lg-11 offset-lg-1  px-0">
                             <h2 class="animate-on-scroll home-card-heading mb-4">
                                 <?php if ($group_name): ?>
                                     <span class="resource-group-label"><?php echo esc_html($group_name); ?> - </span>
