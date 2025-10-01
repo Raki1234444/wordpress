@@ -35,7 +35,6 @@
 						<?php endif; ?>
 
 						<!-- Text Left on Desktop, Second on Mobile -->
-						<!-- Text Left on Desktop, Second on Mobile -->
 						<div class="col-lg-6 d-flex align-items-center p-4 order-2 order-lg-1">
 							<div class="text-white">
 								<!-- Resource Title -->
@@ -44,13 +43,13 @@
 								</h1>
 
 								<!-- Resource Description -->
-								<div id="resource-description" class="fs-5 lh-lg">
+								<div id="resource-description" class="fs-5 lh-lg preview-text">
 									<?php
 									$full_desc = rwmb_meta('resource_text', [], get_the_ID());
 
 									if ($full_desc !== '') {
 										// Show trimmed text
-										echo wp_kses_post(wp_trim_words($full_desc, 100, '...'));
+										 echo wp_kses_post($full_desc);
 										// Store full text in hidden div
 										echo '<div id="resource-description-full" style="display:none;">' . wp_kses_post($full_desc) . '</div>';
 									} else {

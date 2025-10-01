@@ -3072,3 +3072,7 @@ input[type="number"] {
   box-shadow: 0 8px 25px rgba(34, 81, 255, 0.4);
   color: white;
 }
+.preview-text {
+    max-height: 400px;  /* limit visible area */
+    overflow: hidden;   /* hide excess content */
+}
