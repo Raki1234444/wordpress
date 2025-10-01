@@ -93,62 +93,98 @@ if (!function_exists('nexturn_theme_scripts')):
             // Lightweight, scoped handler for resource form only (formatted for readability)
             $inline_js = <<<'JS'
 (function(){
-	function generateResourcePdf(){
-		try{
-			var wrapper = document.getElementById('resource-form');
-			if (!wrapper) return;
-			// var desc = document.getElementById('resource-description');
-			// if (!desc) return;
-            var descFull = document.getElementById('resource-description-full');
-var description = '';
-if (descFull) {
-	description = (descFull.innerText ? descFull.innerText : descFull.textContent).trim();
-} else {
-	// fallback to visible truncated text
-	var desc = document.getElementById('resource-description');
-	if (desc) description = (desc.innerText ? desc.innerText : desc.textContent).trim();
-}
+	function generateResourcePdf() {
+    try {
+        var wrapper = document.getElementById('resource-form');
+        if (!wrapper) return;
 
-			if (!window.jspdf || !window.jspdf.jsPDF) return;
+        // Get full description
+        var descFull = document.getElementById('resource-description-full');
+        var description = '';
+        if (descFull) {
+            description = descFull.innerHTML.trim(); // keep HTML for heading detection
+        } else {
+            var desc = document.getElementById('resource-description');
+            if (desc) description = desc.innerHTML.trim();
+        }
 
-			var titleEl = document.querySelector('h1, .entry-title');
-			var title = titleEl ? titleEl.textContent.trim() : document.title;
-			// var description = (desc.innerText ? desc.innerText : desc.textContent).trim();
+        if (!window.jspdf || !window.jspdf.jsPDF) return;
 
-			var doc = new window.jspdf.jsPDF({ unit: 'pt', format: 'a4' });
-			var margin = 40, maxWidth = 515;
-			doc.setFont('Helvetica', 'bold');
-			doc.setFontSize(16);
-			doc.text(title || 'Resource', margin, margin);
-			doc.setFont('Helvetica', 'normal');
-			doc.setFontSize(12);
-			var y = margin + 24;
-			var lines = doc.splitTextToSize(description, maxWidth);
-			var pageHeight = doc.internal.pageSize.height;
-            var lineHeight = 18;
+        var titleEl = document.querySelector('h1, .entry-title');
+        var title = titleEl ? titleEl.textContent.trim() : document.title;
 
+        var doc = new window.jspdf.jsPDF({ unit: 'pt', format: 'a4' });
+        var margin = 40, maxWidth = 515;
+        var y = margin;
+        var pageHeight = doc.internal.pageSize.height;
+        var lineHeight = 18;
+
+        // Title
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(16);
+        var titleLines = doc.splitTextToSize(title || 'Resource', maxWidth);
+        titleLines.forEach(function (line) {
+            if (y + lineHeight > pageHeight - margin) {
+                doc.addPage();
+                y = margin;
+            }
+            doc.text(line, margin, y);
+            y += lineHeight;
+        });
+
+        y += 10; // gap after title
+
+        // Convert description HTML to temporary element for parsing
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = description;
+        var elements = Array.from(tempDiv.childNodes);
+
+        elements.forEach(function (el) {
+            var text = el.textContent.trim();
+            if (!text) return;
+
+            // Set bold for headings and <strong>/<b>
+            var isBold = false;
+            if (el.nodeType === 1) { // element node
+                var tag = el.tagName.toLowerCase();
+                if (tag === 'h2' || tag === 'h3' || tag === 'strong' || tag === 'b') {
+                    isBold = true;
+                }
+            }
+
+            doc.setFont('Helvetica', isBold ? 'bold' : 'normal');
+            doc.setFontSize(isBold ? 14 : 12);
+
+            var lines = doc.splitTextToSize(text, maxWidth);
             lines.forEach(function (line) {
-	        if (y + lineHeight > pageHeight - margin) {
-		       doc.addPage();
-		       y = margin; // reset for new page
-	      }
-	      doc.text(line, margin, y, { maxWidth: maxWidth });
-	     y += lineHeight;
-      });
+                if (y + lineHeight > pageHeight - margin) {
+                    doc.addPage();
+                    y = margin;
+                }
+                doc.text(line, margin, y);
+                y += lineHeight;
+            });
 
-			var safeName = (title || 'resource').replace(/[^\w\-\s\.]/g, '_') + '.pdf';
-			var blob = doc.output('blob');
-			var url = URL.createObjectURL(blob);
-			var a = document.createElement('a');
-			a.href = url;
-			a.download = safeName;
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-			setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
-			console.log('Resource PDF generated:', safeName);
-		}catch(e){ console.error('PDF generation failed', e); }
-	}
+            y += 4; // small gap between elements
+        });
+
+        var safeName = (title || 'resource').replace(/[^\w\-\s\.]/g, '_') + '.pdf';
+        var blob = doc.output('blob');
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = safeName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+
+        console.log('Resource PDF generated:', safeName);
+
+    } catch (e) {
+        console.error('PDF generation failed', e);
+    }
+}
 
 	function handler(e){
 		var wrapper = document.getElementById('resource-form');
