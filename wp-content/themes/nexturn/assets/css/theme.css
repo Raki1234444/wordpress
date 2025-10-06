@@ -3073,6 +3073,29 @@ input[type="number"] {
   color: white;
 }
 .preview-text {
-    max-height: 400px;  /* limit visible area */
-    overflow: hidden;   /* hide excess content */
+  display: -webkit-box;
+  -webkit-line-clamp: 10;        /* number of visible lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;                  /* text color */
+  line-height: 1.6;             /* for better readability */
+  font-size: 16px;              /* adjust as needed */
+  max-width: 100%;              /* prevent overflow */
+  word-break: break-word;       /* handle long words */
+}
+
+/* Optional: make it responsive */
+@media (max-width: 768px) {
+  .preview-text {
+    -webkit-line-clamp: 6;      /* fewer lines on tablets/mobiles */
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preview-text {
+    -webkit-line-clamp: 6;      /* even fewer lines on small screens */
+    font-size: 14px;
+  }
 }
